@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 3499174289389871650}
   - component: {fileID: 780545206640977660}
   - component: {fileID: 5727962276904808303}
+  - component: {fileID: 1724320700}
+  - component: {fileID: 4926122872226910585}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -216,3 +218,35 @@ MonoBehaviour:
   startPositionIndex: 0
   startPositions: []
   playerSpawnMethod: 0
+--- !u!114 &1724320700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032443777965915820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81da5905cb362874ba7cbe36247debba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NetworkManager: {fileID: 3032443777965915863}
+  NetworkAddress: localhost
+  Scale: 1
+  GUIAnchor: 0
+--- !u!114 &4926122872226910585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032443777965915820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f46b2d67d7a054d8c13075473bd4a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Address: localhost
+  Port: 7777
+  SocketLib: 0
+  BufferSize: 262144
