@@ -1,5 +1,6 @@
 using Mirage;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace JamesFrowen.NetworkBenchmark.November2021
 {
@@ -10,10 +11,14 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 
         Vector3 target;
 
+        // faster for human
+        float Speed => character.Speed * (headless ? 10 : 20);
+        float RotateSpeed => Speed * 5;
+
 
         private void Awake()
         {
-            headless = SystemInfo.graphicsDeviceName == null;
+            headless = SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null;
             character = GetComponent<PlayerCharacter>();
         }
 
@@ -36,12 +41,12 @@ namespace JamesFrowen.NetworkBenchmark.November2021
         {
             // rotate
             float horizontal = Input.GetAxis("Horizontal");
-            transform.Rotate(0, horizontal * character.Speed * Time.deltaTime, 0);
+            transform.Rotate(0, horizontal * RotateSpeed * Time.deltaTime, 0);
 
             // move
             float vertical = Input.GetAxis("Vertical");
             Vector3 forward = transform.forward;
-            Vector3 move = character.Speed * Time.deltaTime * vertical * forward;
+            Vector3 move = Speed * Time.deltaTime * vertical * forward;
             transform.Translate(move);
 
             // force in bounds
@@ -54,15 +59,15 @@ namespace JamesFrowen.NetworkBenchmark.November2021
         private void headlessMove()
         {
             Vector3 position = transform.position;
-            if (Vector3.Distance(target, position) < 0.1f)
+            if (Vector3.Distance(target, position) < 0.1f || target == Vector3.zero)
                 target = Helper.GetRandomPosition(character.SpawnRadius);
 
             Vector3 forward = transform.forward;
             // rotate first, so that position and target are never equal
             Vector3 direction = (target - position).normalized;
             Debug.Assert(direction != Vector3.zero, "Direction zero");
-            transform.forward = Vector3.RotateTowards(forward, direction, character.Speed, character.Speed);
-            transform.position = Vector3.MoveTowards(position, target, character.Speed * Time.deltaTime);
+            transform.forward = Vector3.RotateTowards(forward, direction, RotateSpeed, RotateSpeed);
+            transform.position = Vector3.MoveTowards(position, target, Speed * Time.deltaTime);
         }
     }
 }

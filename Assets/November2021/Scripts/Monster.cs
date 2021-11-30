@@ -1,5 +1,6 @@
 using System;
 using Mirage;
+using Mirage.SocketLayer;
 
 namespace JamesFrowen.NetworkBenchmark.November2021
 {
@@ -10,18 +11,33 @@ namespace JamesFrowen.NetworkBenchmark.November2021
         [SyncVar]
         public int Health;
 
+
         public bool TakeDamage(int damage)
         {
+            // already dead
+            if (Health < 0)
+                return false;
+
             if (!IsServer)
                 throw new InvalidOperationException("TakeDamage called when server not active");
 
             Health -= damage;
+            // alive
             if (Health > 0)
                 return false;
 
-            ServerObjectManager.Destroy(Identity);
-
+            // dead
+            UnSpawn();
             return true;
+        }
+
+        public Pool<Monster> pool;
+
+        public void UnSpawn()
+        {
+            ServerObjectManager.Destroy(Identity, true);
+            gameObject.SetActive(false);
+            pool.Put(this);
         }
     }
 }

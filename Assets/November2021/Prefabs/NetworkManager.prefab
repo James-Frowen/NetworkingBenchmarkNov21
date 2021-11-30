@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3032443777965915817}
   - component: {fileID: 3032443777965915818}
   - component: {fileID: 3032443777965915819}
-  - component: {fileID: 3499174289389871650}
   - component: {fileID: 780545206640977660}
   - component: {fileID: 5727962276904808303}
   - component: {fileID: 1724320700}
@@ -71,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnablePeerMetrics: 0
   MetricsSize: 10
-  MaxConnections: 4
+  MaxConnections: 4000
   DisconnectOnException: 1
   Listening: 1
   SocketFactory: {fileID: 0}
@@ -165,23 +164,6 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 5559371880434984284, guid: 011abeebbd11aeb4d903bf84a0957800, type: 3}
   - {fileID: 7709659749926806198, guid: 1b6c112ee6f4ef4428794f098e335056, type: 3}
---- !u!114 &3499174289389871650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3032443777965915820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06b0f22fbc357ee49bb67753072d2f34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Server: {fileID: 3032443777965915816}
-  ServerObjectManager: {fileID: 3032443777965915818}
-  monstersToPlayer: 10
-  prefab: {fileID: 5142579774974784455, guid: 011abeebbd11aeb4d903bf84a0957800, type: 3}
-  radius: 50
 --- !u!114 &780545206640977660
 MonoBehaviour:
   m_ObjectHideFlags: 0

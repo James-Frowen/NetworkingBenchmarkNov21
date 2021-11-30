@@ -1,4 +1,6 @@
 using Mirage;
+using Mirage.Logging;
+using Mirage.SocketLayer;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,6 +13,18 @@ namespace JamesFrowen.NetworkBenchmark.November2021
         public float monstersToPlayer = 10;
         public Monster prefab;
         public float radius;
+
+        public Pool<Monster> pool;
+
+        private void Awake()
+        {
+            Server.Started.AddListener(ServerStarted);
+        }
+
+        private void ServerStarted()
+        {
+            pool = new Pool<Monster>(createNewMonster, default, 10, 5000, LogFactory.GetLogger<MonsterSpawner>());
+        }
 
         private void Update()
         {
@@ -26,18 +40,32 @@ namespace JamesFrowen.NetworkBenchmark.November2021
             int objectCount = Server.World.SpawnedIdentities.Count;
 
             int targetObjects = Mathf.CeilToInt(playerCount * monstersToPlayer);
-            while (targetObjects < objectCount)
+            // while less than target
+            while (objectCount < targetObjects)
             {
-                targetObjects++;
+                objectCount++;
                 spawnMonster();
             }
         }
 
+        Monster createNewMonster(int _bufferSize, Pool<Monster> pool)
+        {
+            Monster monster = Instantiate(prefab, Helper.GetRandomPosition(radius), Quaternion.Euler(0, Random.value * 360, 0), transform);
+#if DEBUG
+            Debug.Log($"Monster Count: {transform.childCount}");
+            name = $"MonsterSpawner {transform.childCount}";
+#endif
+            monster.pool = pool;
+            return monster;
+        }
         private void spawnMonster()
         {
-            Monster clone = Instantiate(prefab, Helper.GetRandomPosition(radius), Quaternion.Euler(0, Random.value * 360, 0));
+            Monster clone = pool.Take();
+            clone.transform.SetPositionAndRotation(Helper.GetRandomPosition(radius), Quaternion.Euler(0, Random.value * 360, 0));
             clone.Speed = Random.Range(1f, 5f);
             clone.Health = Random.Range(5, 25);
+
+            clone.gameObject.SetActive(true);
             ServerObjectManager.Spawn(clone.Identity);
         }
     }

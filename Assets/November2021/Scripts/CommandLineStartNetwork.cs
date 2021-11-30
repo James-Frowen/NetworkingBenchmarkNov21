@@ -18,6 +18,8 @@ namespace JamesFrowen.NetworkBenchmark.November2021
             if (hasSetup) return;
             hasSetup = true;
 
+            Application.targetFrameRate = 60;
+
             // to lower because we dont care about case
             string[] args = Environment.GetCommandLineArgs().Select(x => x.ToLower()).ToArray();
             List<ArgCommand> commands = getArgCommands();

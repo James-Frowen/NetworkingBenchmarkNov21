@@ -9,7 +9,7 @@ namespace JamesFrowen.NetworkBenchmark.November2021
         public float SpawnRadius;
 
         [SyncVar]
-        public float Speed = 1;
+        public float Speed = 3;
         [SyncVar]
         public int Damage = 1;
         [SyncVar]
@@ -57,6 +57,11 @@ namespace JamesFrowen.NetworkBenchmark.November2021
                     {
                         LevelUp();
                     }
+                }
+                // if not dead, shove monster to right/left
+                else
+                {
+                    monster.transform.position += transform.right * (Random.value < 0.5f ? 2 : -2);
                 }
             }
         }
