@@ -6,6 +6,28 @@ using Random = UnityEngine.Random;
 
 namespace JamesFrowen.NetworkBenchmark.November2021
 {
+
+    public static class MonsterPool
+    {
+        public static Pool<Monster> CreatePool(Monster prefab, Transform parent)
+        {
+            return new Pool<Monster>(createNewMonsterWrapper(prefab, parent), default, 10, 5000, LogFactory.GetLogger<MonsterSpawner>());
+        }
+
+        static Pool<Monster>.CreateNewItem createNewMonsterWrapper(Monster prefab, Transform parent)
+              => (int _bufferSize, Pool<Monster> pool) =>
+          {
+              Monster monster = GameObject.Instantiate(prefab, parent);
+#if DEBUG
+              Debug.Log($"Monster Count: {parent.childCount}");
+              parent.name = $"MonsterSpawner {parent.childCount}";
+#endif
+              monster.pool = pool;
+              return monster;
+          };
+    }
+
+
     public class MonsterSpawner : MonoBehaviour
     {
         public NetworkServer Server;
@@ -23,8 +45,9 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 
         private void ServerStarted()
         {
-            pool = new Pool<Monster>(createNewMonster, default, 10, 5000, LogFactory.GetLogger<MonsterSpawner>());
+            pool = MonsterPool.CreatePool(prefab, transform);
         }
+
 
         private void Update()
         {
@@ -48,16 +71,6 @@ namespace JamesFrowen.NetworkBenchmark.November2021
             }
         }
 
-        Monster createNewMonster(int _bufferSize, Pool<Monster> pool)
-        {
-            Monster monster = Instantiate(prefab, Helper.GetRandomPosition(radius), Quaternion.Euler(0, Random.value * 360, 0), transform);
-#if DEBUG
-            Debug.Log($"Monster Count: {transform.childCount}");
-            name = $"MonsterSpawner {transform.childCount}";
-#endif
-            monster.pool = pool;
-            return monster;
-        }
         private void spawnMonster()
         {
             Monster clone = pool.Take();

@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5727962276904808303}
   - component: {fileID: 1724320700}
   - component: {fileID: 4926122872226910585}
+  - component: {fileID: 5251847575707905189}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -232,3 +233,16 @@ MonoBehaviour:
   Port: 7777
   SocketLib: 0
   BufferSize: 262144
+--- !u!114 &5251847575707905189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032443777965915820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ad8ea370847b84a81af2542649b668, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5142579774974784455, guid: 011abeebbd11aeb4d903bf84a0957800, type: 3}
