@@ -1,0 +1,9 @@
+
+# run inline
+.\default_server.exe -server localhost
+
+# run one
+cmd /c start powershell -Command { .\default_server.exe -client 10 }
+
+# run many
+1..20 | % { invoke-expression 'cmd /c start powershell -Command { .\default_server.exe -client localhost }'; Start-Sleep -s 2 }

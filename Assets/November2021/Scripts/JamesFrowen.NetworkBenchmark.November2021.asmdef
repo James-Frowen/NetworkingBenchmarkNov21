@@ -1,0 +1,16 @@
+{
+    "name": "JamesFrowen.NetworkBenchmark.November2021",
+    "references": [
+        "GUID:30817c1a0e6d646d99c048fc403f5979",
+        "GUID:c0b2064c294eb174c9f3f7da398eb677"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
