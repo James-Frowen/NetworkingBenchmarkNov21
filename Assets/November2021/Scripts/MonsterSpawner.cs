@@ -19,7 +19,6 @@ namespace JamesFrowen.NetworkBenchmark.November2021
           {
               Monster monster = GameObject.Instantiate(prefab, parent);
 #if DEBUG
-              Debug.Log($"Monster Count: {parent.childCount}");
               parent.name = $"MonsterSpawner {parent.childCount}";
 #endif
               monster.pool = pool;
