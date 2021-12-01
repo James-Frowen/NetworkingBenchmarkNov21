@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.miragenet.mirage": "113.0.0",
     "com.cysharp.unitask": "2.2.5",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
