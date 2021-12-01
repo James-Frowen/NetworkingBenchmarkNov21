@@ -6,12 +6,12 @@ using Random = UnityEngine.Random;
 
 namespace JamesFrowen.NetworkBenchmark.November2021
 {
-
     public static class MonsterPool
     {
         public static Pool<Monster> CreatePool(Monster prefab, Transform parent)
         {
-            return new Pool<Monster>(createNewMonsterWrapper(prefab, parent), default, 10, 5000, LogFactory.GetLogger<MonsterSpawner>());
+            // 0 initial size so unspawned objects dont apear on client
+            return new Pool<Monster>(createNewMonsterWrapper(prefab, parent), default, 0, 5000, LogFactory.GetLogger<MonsterSpawner>());
         }
 
         static Pool<Monster>.CreateNewItem createNewMonsterWrapper(Monster prefab, Transform parent)
