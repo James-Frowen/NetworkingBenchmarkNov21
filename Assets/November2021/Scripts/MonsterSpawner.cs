@@ -1,27 +1,33 @@
-using Mirage;
-using Mirage.Logging;
-using Mirage.SocketLayer;
+using System;
+using Mirror;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace JamesFrowen.NetworkBenchmark.November2021
 {
-
     public static class MonsterPool
     {
+        private class PoolHolder
+        {
+            public Pool<Monster> Pool;
+        }
         public static Pool<Monster> CreatePool(Monster prefab, Transform parent)
         {
-            return new Pool<Monster>(createNewMonsterWrapper(prefab, parent), default, 10, 5000, LogFactory.GetLogger<MonsterSpawner>());
+            // need holder like this so that we can pass the refernce of Pool to the object it creates
+            var holder = new PoolHolder();
+            var pool = new Pool<Monster>(createNewMonsterWrapper(prefab, parent, holder), 0);
+            holder.Pool = pool;
+            return pool;
         }
 
-        static Pool<Monster>.CreateNewItem createNewMonsterWrapper(Monster prefab, Transform parent)
-              => (int _bufferSize, Pool<Monster> pool) =>
+        static Func<Monster> createNewMonsterWrapper(Monster prefab, Transform parent, PoolHolder holder)
+              => () =>
           {
               Monster monster = GameObject.Instantiate(prefab, parent);
 #if DEBUG
               parent.name = $"MonsterSpawner {parent.childCount}";
 #endif
-              monster.pool = pool;
+              monster.pool = holder.Pool;
               return monster;
           };
     }
@@ -29,37 +35,28 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 
     public class MonsterSpawner : MonoBehaviour
     {
-        public NetworkServer Server;
-        public ServerObjectManager ServerObjectManager;
         public float monstersToPlayer = 10;
         public Monster prefab;
         public float radius;
 
         public Pool<Monster> pool;
 
-        private void Awake()
-        {
-            Server.Started.AddListener(ServerStarted);
-        }
-
-        private void ServerStarted()
-        {
-            pool = MonsterPool.CreatePool(prefab, transform);
-        }
-
-
         private void Update()
         {
-            if (Server.Active)
+            if (NetworkServer.active)
             {
+                if (pool == null)
+                {
+                    pool = MonsterPool.CreatePool(prefab, transform);
+                }
                 SpawnUpdate();
             }
         }
 
         private void SpawnUpdate()
         {
-            int playerCount = Server.Players.Count;
-            int objectCount = Server.World.SpawnedIdentities.Count;
+            int playerCount = NetworkServer.connections.Count;
+            int objectCount = NetworkServer.spawned.Count;
 
             int targetObjects = Mathf.CeilToInt(playerCount * monstersToPlayer);
             // while less than target
@@ -78,7 +75,8 @@ namespace JamesFrowen.NetworkBenchmark.November2021
             clone.Health = Random.Range(5, 25);
 
             clone.gameObject.SetActive(true);
-            ServerObjectManager.Spawn(clone.Identity);
+
+            NetworkServer.Spawn(clone.gameObject);
         }
     }
 

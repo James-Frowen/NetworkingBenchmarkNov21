@@ -125,38 +125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnSettings:
-    SendPosition: 1
-    SendRotation: 1
-    SendScale: 1
-  _sceneId: 0
-  ServerObjectManager: {fileID: 0}
-  ClientObjectManager: {fileID: 0}
-  _prefabHash: 1210655907
-  _onStartServer:
-    _event:
-      m_PersistentCalls:
-        m_Calls: []
-  _onStartClient:
-    _event:
-      m_PersistentCalls:
-        m_Calls: []
-  _onStartLocalPlayer:
-    _event:
-      m_PersistentCalls:
-        m_Calls: []
-  _onAuthorityChanged:
-    _event:
-      m_PersistentCalls:
-        m_Calls: []
-  _onStopClient:
-    _event:
-      m_PersistentCalls:
-        m_Calls: []
-  _onStopServer:
-    _event:
-      m_PersistentCalls:
-        m_Calls: []
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 011abeebbd11aeb4d903bf84a0957800
   hasSpawned: 0
 --- !u!114 &5142579774974784455
 MonoBehaviour:
@@ -188,7 +160,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  ClientAuthority: 0
-  LocalPositionSensitivity: 0.01
-  LocalRotationSensitivity: 0.01
-  LocalScaleSensitivity: 0.01
+  clientAuthority: 0
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}

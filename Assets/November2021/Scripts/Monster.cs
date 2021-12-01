@@ -1,6 +1,5 @@
 using System;
-using Mirage;
-using Mirage.SocketLayer;
+using Mirror;
 
 namespace JamesFrowen.NetworkBenchmark.November2021
 {
@@ -18,7 +17,7 @@ namespace JamesFrowen.NetworkBenchmark.November2021
             if (Health < 0)
                 return false;
 
-            if (!IsServer)
+            if (!isServer)
                 throw new InvalidOperationException("TakeDamage called when server not active");
 
             Health -= damage;
@@ -35,9 +34,9 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 
         public void UnSpawn()
         {
-            ServerObjectManager.Destroy(Identity, false);
+            NetworkServer.UnSpawn(gameObject);
             gameObject.SetActive(false);
-            pool.Put(this);
+            pool.Return(this);
         }
     }
 }

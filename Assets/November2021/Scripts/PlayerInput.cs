@@ -1,4 +1,4 @@
-using Mirage;
+using Mirror;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -24,7 +24,7 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 
         private void Update()
         {
-            if (!IsLocalPlayer)
+            if (!isLocalPlayer)
                 return;
 
             if (headless)

@@ -1,4 +1,4 @@
-using Mirage;
+using Mirror;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,16 +18,10 @@ namespace JamesFrowen.NetworkBenchmark.November2021
         public int XP;
 
 
-        private void Awake()
-        {
-            Identity.OnStartServer.AddListener(onStartServer);
-            Identity.OnStartClient.AddListener(OnStartClient);
-        }
-
-        private void OnStartClient()
+        public override void OnStartClient()
         {
             Material mat = GetComponent<Renderer>().material;
-            if (IsLocalPlayer)
+            if (isLocalPlayer)
             {
                 mat.color = new Color(0, 0, 0.6f);
             }
@@ -37,14 +31,14 @@ namespace JamesFrowen.NetworkBenchmark.November2021
             }
         }
 
-        private void onStartServer()
+        public override void OnStartServer()
         {
             transform.SetPositionAndRotation(Helper.GetRandomPosition(SpawnRadius), Quaternion.Euler(0, Random.value * 360, 0));
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!IsServer)
+            if (!isServer)
                 return;
 
             if (other.TryGetComponent(out Monster monster))

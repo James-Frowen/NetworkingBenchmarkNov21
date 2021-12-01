@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mirage;
-using Mirage.SocketLayer;
+using Mirror;
 using UnityEngine;
 
 namespace JamesFrowen.NetworkBenchmark.November2021
@@ -60,15 +59,16 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 
         private void parseTransport(int index, IReadOnlyList<string> args)
         {
-            Type newType = getNewTransportType(args[index + 1]);
+            throw new NotSupportedException();
+            //Type newType = getNewTransportType(args[index + 1]);
 
-            SocketFactory old = networkManager.Server.SocketFactory;
-            GameObject.Destroy(old);
+            //SocketFactory old = networkManager.Server.SocketFactory;
+            //GameObject.Destroy(old);
 
-            var factory = networkManager.gameObject.AddComponent(newType) as SocketFactory;
+            //var factory = networkManager.gameObject.AddComponent(newType) as SocketFactory;
 
-            networkManager.Server.SocketFactory = factory;
-            networkManager.Client.SocketFactory = factory;
+            //networkManager.Server.SocketFactory = factory;
+            //networkManager.Client.SocketFactory = factory;
         }
 
         private Type getNewTransportType(string v)
@@ -76,50 +76,48 @@ namespace JamesFrowen.NetworkBenchmark.November2021
             throw new NotImplementedException();
         }
 
+        static string address;
         private void parseAddress(int index, IReadOnlyList<string> args)
         {
-            if (networkManager.Server.SocketFactory is IHasAddress hasAddress)
-            {
-                hasAddress.Address = args[index + 1];
-            }
-            else
-            {
-                Debug.LogError($"Socket Factory does not support Address, Type:{networkManager.Server.SocketFactory?.GetType()}");
-            }
+            address = args[index + 1];
+            //if (networkManager.Server.SocketFactory is IHasAddress hasAddress)
+            //{
+            //    hasAddress.Address = args[index + 1];
+            //}
+            //else
+            //{
+            //    Debug.LogError($"Socket Factory does not support Address, Type:{networkManager.Server.SocketFactory?.GetType()}");
+            //}
         }
 
         private void parsePort(int index, IReadOnlyList<string> args)
         {
-            if (networkManager.Server.SocketFactory is IHasPort hasPort)
-            {
-                hasPort.Port = int.Parse(args[index + 1]);
-            }
-            else
-            {
-                Debug.LogError($"Socket Factory does not support Port, Type:{networkManager.Server.SocketFactory?.GetType()}");
-            }
+            throw new NotSupportedException();
+            //if (networkManager.Server.SocketFactory is IHasPort hasPort)
+            //{
+            //    hasPort.Port = int.Parse(args[index + 1]);
+            //}
+            //else
+            //{
+            //    Debug.LogError($"Socket Factory does not support Port, Type:{networkManager.Server.SocketFactory?.GetType()}");
+            //}
         }
 
         private void parseServer(int index, IReadOnlyList<string> args)
         {
-            networkManager.Server.StartServer();
+            NetworkManager.singleton.StartServer();
         }
 
         private void parseClient(int index, IReadOnlyList<string> args)
         {
             int count = GetClientCount(index, args);
-            var clients = new NetworkClient[count];
-            clients[0] = networkManager.Client;
-            for (int i = 1; i < count; i++)
+            if (count != 1)
             {
-                // copy manager
-                clients[i] = Instantiate(networkManager).Client;
+                throw new NotSupportedException();
             }
 
-            foreach (NetworkClient client in clients)
-            {
-                client.Connect();
-            }
+            NetworkManager.singleton.networkAddress = string.IsNullOrEmpty(address) ? "localhost" : address;
+            NetworkManager.singleton.StartClient();
         }
 
         /// <summary>
