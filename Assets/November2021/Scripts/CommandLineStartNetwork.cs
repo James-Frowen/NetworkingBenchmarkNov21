@@ -13,10 +13,15 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 
         // only let 1 StartNetwork setup, incase it gets copied
         static bool hasSetup = false;
-        private void Awake()
+        private void Start()
         {
             if (hasSetup) return;
             hasSetup = true;
+
+            if (networkManager.Server.SocketFactory == null)
+                networkManager.Server.SocketFactory = networkManager.Server.GetComponent<SocketFactory>();
+            if (networkManager.Client.SocketFactory == null)
+                networkManager.Client.SocketFactory = networkManager.Client.GetComponent<SocketFactory>();
 
             Application.targetFrameRate = 60;
 
