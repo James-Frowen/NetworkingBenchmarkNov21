@@ -2,11 +2,13 @@
 # run inline
 .\default_server.exe -server
 ## Runs 10 clients inside 1 process
-.\default_server.exe -client 10
+.\default_server.exe -client 5 -address 35.187.11.187
+
+./default_server.x86_64 -logfile ~/client$i.log -client 5 -address 35.187.11.187
 
 # run one
 cd G:\UnityProjects\NetworkingBenchmarkNov21\Build\benchmarkNov21_server
-cmd /c start powershell -Command { .\default_server.exe -client 10 }
+cmd /c start powershell -Command { .\default_server.exe -client 1 }
 
 # run many
-1..10 | % { invoke-expression 'cmd /c start powershell -Command { .\default_server.exe -client 10 }'; Start-Sleep -s 2 }
+1..10 | % { invoke-expression 'cmd /c start powershell -Command { .\default_server.exe -client 1 }'; Start-Sleep -s 2 }
