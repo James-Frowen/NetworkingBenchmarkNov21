@@ -53,7 +53,7 @@ namespace JamesFrowen.NetworkBenchmark.November2021
                 if (killed)
                 {
                     XP++;
-                    if (XP > Level * Level)
+                    if (XP > Level * Level * Level)
                     {
                         LevelUp();
                     }
@@ -70,13 +70,13 @@ namespace JamesFrowen.NetworkBenchmark.November2021
         {
             XP = 0;
             Level++;
-            if (Random.value > 0.5)
+            if (Random.value > 0.2)
             {
                 Damage += (int)Mathf.Sqrt(Level);
             }
             else
             {
-                Speed += (int)Mathf.Sqrt(Level);
+                Speed += (int)Mathf.Sqrt(Mathf.Sqrt(Level));
             }
         }
     }
