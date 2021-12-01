@@ -35,7 +35,7 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 
         public void UnSpawn()
         {
-            ServerObjectManager.Destroy(Identity, true);
+            ServerObjectManager.Destroy(Identity, false);
             gameObject.SetActive(false);
             pool.Put(this);
         }
