@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1724320700}
   - component: {fileID: 4926122872226910585}
   - component: {fileID: 5251847575707905189}
+  - component: {fileID: 3032443778549380377}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -246,3 +247,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 5142579774974784455, guid: 011abeebbd11aeb4d903bf84a0957800, type: 3}
+--- !u!114 &3032443778549380377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032443777965915820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82781f61fc1d90b4a952363482a029a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Server: {fileID: 3032443777965915816}
+  VisibilityUpdateInterval: 0.33333334
+  gridSize: 15
+  Offset: {x: -51, y: -51}
+  Size: {x: 102, y: 102}

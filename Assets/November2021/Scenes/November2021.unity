@@ -928,5 +928,5 @@ MonoBehaviour:
   Server: {fileID: 1724320708}
   VisibilityUpdateInterval: 0.33333334
   gridSize: 15
-  Offset: {x: -50, y: -50}
-  Size: {x: 100, y: 100}
+  Offset: {x: -51, y: -51}
+  Size: {x: 102, y: 102}
