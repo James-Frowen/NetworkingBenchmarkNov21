@@ -207,6 +207,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  VisibilityRange: 10
-  VisibilityUpdateInterval: 1
+  VisibilityRange: 15
+  VisibilityUpdateInterval: 0.33333334
   ForceHidden: 0
