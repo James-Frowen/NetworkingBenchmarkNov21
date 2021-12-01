@@ -1,7 +1,8 @@
 {
     "name": "JamesFrowen.NetworkBenchmark.November2021",
     "references": [
-        "GUID:30817c1a0e6d646d99c048fc403f5979"
+        "GUID:30817c1a0e6d646d99c048fc403f5979",
+        "GUID:72872094b21c16e48b631b2224833d49"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
