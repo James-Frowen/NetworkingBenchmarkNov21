@@ -1,4 +1,18 @@
-# Settings
+# Network Benchmark November 2021
+
+Testing differnet metrics for Mirage vs Mirror.
+
+## The Benchmark
+- 1 scene
+- 100m x 100m
+- 10 monsters connected player
+- Players move to random position
+- If player collides with monster it will deal damage to monster
+- if monster reaches 0 hp it will die
+- Server will respawn monsters each frame to keep the correct ammount
+- Both Server and Client have object pooling for the monsters
+
+## VPS Settings
 google cloud
 - e2-small
 
