@@ -18,13 +18,13 @@ google cloud
 
 
 ## key
-noAoi - no visibility scripts
-Aoi1 - proximity checker
-Aoi2 - mirror's new IM system
-Aoi4 - new optimized grid
+- noAoi - no visibility scripts
+- Aoi1 - proximity checker
+- Aoi2 - mirror's new IM system
+- Aoi4 - new optimized grid
 
-NT1 - old NT
-NT2 - mirror's new NT NT2k
+- NT1 - old NT
+- NT2 - mirror's new NT NT2k
 
 ## results
 
