@@ -9,6 +9,23 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 {
     public class CommandLineStartNetwork : MonoBehaviour
     {
+#if UNITY_EDITOR
+        float previous;
+        private void Update()
+        {
+            if (Time.time > previous + 10)
+            {
+                previous = Time.time;
+                if (networkManager.Client.Active)
+                {
+                    // all identities with PlayerCharacter attached
+                    int count = networkManager.Client.World.SpawnedIdentities.Where(x => x.TryGetComponent<PlayerCharacter>(out PlayerCharacter _)).Count();
+                    Debug.Log($"PlayerCount: {count}");
+                }
+            }
+        }
+#endif
+
         public NetworkManager networkManager;
 
         // only let 1 StartNetwork setup, incase it gets copied
