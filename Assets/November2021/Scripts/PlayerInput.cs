@@ -45,9 +45,8 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 
             // move
             float vertical = Input.GetAxis("Vertical");
-            Vector3 forward = transform.forward;
-            Vector3 move = Speed * Time.deltaTime * vertical * forward;
-            transform.Translate(move);
+            Vector3 move = Speed * Time.deltaTime * vertical * Vector3.forward;
+            transform.Translate(move, Space.Self);
 
             // force in bounds
             if (Vector3.Distance(transform.position, Vector3.zero) > character.SpawnRadius)
