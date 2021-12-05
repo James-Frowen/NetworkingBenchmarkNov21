@@ -9,14 +9,20 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 {
     public class CommandLineStartNetwork : MonoBehaviour
     {
-#if UNITY_EDITOR
-        float previous;
+#if UNITY_SERVER || UNITY_EDITOR
+        [NonSerialized] float previous;
         private void Update()
         {
             if (Time.time > previous + 10)
             {
                 previous = Time.time;
-                if (networkManager.Client.Active)
+                if (networkManager.Server.Active)
+                {
+                    NetworkServer server = networkManager.Server;
+                    int count = server.Players.Count;
+                    Debug.Log($"PlayerCount: {count}");
+                }
+                else if (networkManager.Client.Active)
                 {
                     // all identities with PlayerCharacter attached
                     int count = networkManager.Client.World.SpawnedIdentities.Where(x => x.TryGetComponent<PlayerCharacter>(out PlayerCharacter _)).Count();
@@ -25,6 +31,7 @@ namespace JamesFrowen.NetworkBenchmark.November2021
             }
         }
 #endif
+
 
         public NetworkManager networkManager;
 
