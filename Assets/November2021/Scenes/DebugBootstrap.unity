@@ -152,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scene: Assets/November2021/Scenes/November2021.unity
   prefab: {fileID: 3032443777965915863, guid: 5fd0025cd2b74ca419657964e01007c1, type: 3}
+  CreateClientCount: 2
 --- !u!4 &1992396482
 Transform:
   m_ObjectHideFlags: 0

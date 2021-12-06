@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 7609510347509919951}
   - component: {fileID: 2230547690176839602}
   - component: {fileID: 4207422503756172213}
+  - component: {fileID: -733341516820549804}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -464,5 +465,21 @@ MonoBehaviour:
   target: {fileID: 5285248595404836873}
   clientAuthority: 1
   useLocalSpace: 1
-  clientSyncInterval: 0.1
+  clientSyncRate: 5
   showDebugGui: 0
+--- !u!114 &-733341516820549804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8806137537607974350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d849c6a14ab39a43a583eb05ce67b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  maxTime: 3
+  MaxScale: 1

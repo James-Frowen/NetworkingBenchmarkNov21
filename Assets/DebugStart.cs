@@ -10,6 +10,7 @@ namespace JamesFrowen.NetworkBenchmark.November2021
     {
         [Scene] public string scene;
         public NetworkManager prefab;
+        public int CreateClientCount;
 
         List<PhysicsScene> physics = new List<PhysicsScene>();
         int clientCount = 0;
@@ -17,35 +18,70 @@ namespace JamesFrowen.NetworkBenchmark.November2021
         {
             yield return createServer();
             yield return null;
-            yield return createClient();
+            for (int i = 0; i < CreateClientCount; i++)
+            {
+                yield return createClient();
+            }
         }
 
         IEnumerator createServer()
         {
+            Debug.Log("Create Server");
             yield return SceneManager.LoadSceneAsync(this.scene, new LoadSceneParameters { loadSceneMode = LoadSceneMode.Additive, localPhysicsMode = LocalPhysicsMode.Physics3D });
             Scene scene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
+            physics.Add(scene.GetPhysicsScene());
+            Destroy(FindObjectOfType<Camera>().gameObject);
+            Destroy(FindObjectOfType<Light>().gameObject);
             NetworkManager manager = Instantiate(prefab);
+            NetworkManagerGUI gui = manager.GetComponent<NetworkManagerGUI>();
+            if (gui != null) gui.enabled = false;
             SceneManager.MoveGameObjectToScene(manager.gameObject, scene);
             NetworkServer server = manager.Server;
             server.StartServer();
-            server.World.onSpawn += (identity) => SceneManager.MoveGameObjectToScene(identity.gameObject, scene);
-            foreach (NetworkIdentity identity in server.World.SpawnedIdentities) SceneManager.MoveGameObjectToScene(identity.gameObject, scene);
-            yield return null;
-        }
-        IEnumerator createClient()
-        {
-            clientCount++;
-            yield return SceneManager.LoadSceneAsync(this.scene, new LoadSceneParameters { loadSceneMode = LoadSceneMode.Additive, localPhysicsMode = LocalPhysicsMode.Physics3D });
-            Scene scene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
-            NetworkManager manager = Instantiate(prefab);
-            SceneManager.MoveGameObjectToScene(manager.gameObject, scene);
-            NetworkClient client = manager.Client;
-            client.Connect();
-            client.World.onSpawn += (identity) => SceneManager.MoveGameObjectToScene(identity.gameObject, scene);
-            foreach (NetworkIdentity identity in client.World.SpawnedIdentities) SceneManager.MoveGameObjectToScene(identity.gameObject, scene);
+            server.World.onSpawn += (identity) => MoveIfNotChild(identity.gameObject, scene);
+            server.World.onSpawn += (identity) => disableOnServer(identity);
+            foreach (NetworkIdentity identity in server.World.SpawnedIdentities) { MoveIfNotChild(identity.gameObject, scene); disableOnServer(identity); }
             yield return null;
         }
 
+        private void disableOnServer(NetworkIdentity identity)
+        {
+            foreach (Renderer renderer in identity.gameObject.GetComponentsInChildren<Renderer>())
+            {
+                renderer.enabled = false;
+            }
+        }
+
+        IEnumerator createClient()
+        {
+            clientCount++;
+            Debug.Log($"Create Client {clientCount}");
+            yield return SceneManager.LoadSceneAsync(this.scene, new LoadSceneParameters { loadSceneMode = LoadSceneMode.Additive, localPhysicsMode = LocalPhysicsMode.Physics3D });
+            Scene scene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
+
+            Camera[] cameras = FindObjectsOfType<Camera>();
+            Light[] lights = FindObjectsOfType<Light>();
+            for (int i = 1; i < cameras.Length; i++) { Destroy(cameras[i].gameObject); }
+            for (int i = 1; i < lights.Length; i++) { Destroy(lights[i].gameObject); }
+
+            physics.Add(scene.GetPhysicsScene());
+            NetworkManager manager = Instantiate(prefab);
+            NetworkManagerGUI gui = manager.GetComponent<NetworkManagerGUI>();
+            if (gui != null) gui.enabled = false; SceneManager.MoveGameObjectToScene(manager.gameObject, scene);
+            NetworkClient client = manager.Client;
+            client.Connect();
+            client.World.onSpawn += (identity) => MoveIfNotChild(identity.gameObject, scene);
+            foreach (NetworkIdentity identity in client.World.SpawnedIdentities) MoveIfNotChild(identity.gameObject, scene);
+            yield return null;
+        }
+
+        void MoveIfNotChild(GameObject target, Scene scene)
+        {
+            if (target.transform.parent == null)
+            {
+                SceneManager.MoveGameObjectToScene(target, scene);
+            }
+        }
 
         private void FixedUpdate()
         {

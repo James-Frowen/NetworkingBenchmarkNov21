@@ -68,7 +68,6 @@ GameObject:
   - component: {fileID: 4926122872226910585}
   - component: {fileID: 5251847575707905189}
   - component: {fileID: 579637290722592575}
-  - component: {fileID: 668357814}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -316,20 +315,6 @@ MonoBehaviour:
     blockSize: 5
     precision: {x: 0.0033333334, y: 0.0033333334, z: 0.0033333334}
     bitCount: 10
-  SyncRate: 20
+  SyncRate: 5
   TickDelayCount: 2
   syncMode: 1
---- !u!114 &668357814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3032443777965915820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03e2afd2ba210484196712e2b0ba2442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scene: 
-  prefab: {fileID: 0}

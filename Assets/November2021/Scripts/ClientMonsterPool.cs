@@ -25,6 +25,7 @@ namespace JamesFrowen.NetworkBenchmark.November2021
         private void ClientStarted()
         {
             var parent = new GameObject("Pool");
+            parent.transform.parent = transform;
             pool = MonsterPool.CreatePool(prefab, parent.transform);
             clientObjectManager.RegisterSpawnHandler(prefab.Identity.PrefabHash, SpawnMonster, UnspawnMonster);
         }
@@ -38,7 +39,7 @@ namespace JamesFrowen.NetworkBenchmark.November2021
 
         private void UnspawnMonster(NetworkIdentity spawned)
         {
-            var monster = spawned.GetComponent<Monster>();
+            Monster monster = spawned.GetComponent<Monster>();
             monster.gameObject.SetActive(false);
             pool.Put(monster);
         }
