@@ -101,7 +101,11 @@ namespace JamesFrowen.PositionSync
         [SerializeField] bool useLocalSpace = true;
 
         [Tooltip("Client Authority Sync Interval")]
-        [SerializeField] float clientSyncInterval = 0.1f;
+        [SerializeField] float clientSyncRate = 20;
+        [SerializeField] float ClientFixedSyncInterval => 1 / clientSyncRate;
+
+        //float clientTime;
+        float syncTimer;
 
         [SerializeField] bool showDebugGui = false;
 
@@ -334,7 +338,7 @@ namespace JamesFrowen.PositionSync
             if (snapshotBuffer.IsEmpty)
             {
                 // use new state here instead of TranformState incase update is from client auth when runing in host mode
-                snapshotBuffer.AddSnapShot(new TransformState(Position, Rotation), serverTime - clientSyncInterval);
+                snapshotBuffer.AddSnapShot(new TransformState(Position, Rotation), serverTime - ClientFixedSyncInterval);
             }
             snapshotBuffer.AddSnapShot(state, serverTime);
         }
@@ -347,11 +351,16 @@ namespace JamesFrowen.PositionSync
             // host client doesn't need to update server
             if (IsServer) { return; }
 
-            if (HasMoved() || HasRotated())
+            syncTimer += Time.unscaledDeltaTime;
+            if (syncTimer > ClientFixedSyncInterval)
             {
-                SendMessageToServer();
-                // todo move client auth uppdate to sync system
-                ClearNeedsUpdate();
+                syncTimer -= ClientFixedSyncInterval;
+                if (HasMoved() || HasRotated())
+                {
+                    SendMessageToServer();
+                    // todo move client auth uppdate to sync system
+                    ClearNeedsUpdate();
+                }
             }
         }
 
@@ -360,7 +369,8 @@ namespace JamesFrowen.PositionSync
         {
             using (PooledNetworkWriter writer = NetworkWriterPool.GetWriter())
             {
-                _system.packer.PackTime(writer, (float)NetworkTime.Time);
+                // todo does client need to send time?
+                //_system.packer.PackTime(writer, (float)NetworkTime.Time);
                 _system.packer.PackNext(writer, this);
 
                 Client.Send(new NetworkPositionSingleMessage

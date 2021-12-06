@@ -140,6 +140,9 @@ namespace JamesFrowen.PositionSync
         public float SyncRate = 20;
         public float FixedSyncInterval => 1 / SyncRate;
 
+        float serverTime;
+        float syncTimer;
+
         [Header("Snapshot Interpolation")]
         [Tooltip("Number of ticks to delay interpolation to make sure there is always a snapshot to interpolate towards. High delay can handle more jitter, but adds latancy to the position.")]
         public float TickDelayCount = 2;
@@ -213,9 +216,6 @@ namespace JamesFrowen.PositionSync
 
 
         #region Sync Server -> Client
-
-        float serverTime;
-        float syncTimer;
 
         private void LateUpdate()
         {
@@ -539,12 +539,13 @@ namespace JamesFrowen.PositionSync
         {
             using (PooledNetworkReader reader = NetworkReaderPool.GetReader(msg.payload))
             {
-                float time = packer.UnpackTime(reader);
+                //float time = packer.UnpackTime(reader);
                 packer.UnpackNext(reader, out uint id, out Vector3 pos, out Quaternion rot);
 
                 if (Behaviours.Dictionary.TryGetValue(id, out SyncPositionBehaviour behaviour))
                 {
-                    behaviour.ApplyOnServer(new TransformState(pos, rot), time);
+                    // todo fix host mode time
+                    behaviour.ApplyOnServer(new TransformState(pos, rot), serverTime);
                 }
                 else
                 {
