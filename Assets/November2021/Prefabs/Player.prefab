@@ -253,9 +253,8 @@ GameObject:
   - component: {fileID: 7709659749926806198}
   - component: {fileID: 8024883851732619806}
   - component: {fileID: 7609510347509919951}
-  - component: {fileID: -6789317554672101053}
   - component: {fileID: 2230547690176839602}
-  - component: {fileID: -7879323148499814567}
+  - component: {fileID: 4207422503756172213}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -435,24 +434,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
---- !u!114 &-6789317554672101053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8806137537607974350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  ClientAuthority: 1
-  LocalPositionSensitivity: 0.01
-  LocalRotationSensitivity: 0.01
-  LocalScaleSensitivity: 0.01
 --- !u!135 &2230547690176839602
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -466,7 +447,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-7879323148499814567
+--- !u!114 &4207422503756172213
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -475,10 +456,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8806137537607974350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46ece7cba1daaf74d88f6bf3e5374a16, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ad408b25fc5a054ba28ca1f9dd57371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  GridVisibleRange: 1
-  System: {fileID: 0}
+  target: {fileID: 5285248595404836873}
+  clientAuthority: 1
+  useLocalSpace: 1
+  clientSyncInterval: 0.1
+  showDebugGui: 0

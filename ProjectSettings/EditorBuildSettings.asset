@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/November2021/Scenes/DebugBootstrap.unity
+    guid: a23689f5682098d4e91b0f31f327c542
+  - enabled: 1
     path: Assets/November2021/Scenes/November2021.unity
     guid: 10dc10ae571a33243a5ffb3ebc7b10b1
   m_configObjects: {}

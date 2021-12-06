@@ -15,8 +15,7 @@ GameObject:
   - component: {fileID: 1773795667538865544}
   - component: {fileID: 5559371880434984284}
   - component: {fileID: 5142579774974784455}
-  - component: {fileID: 2934501669080285829}
-  - component: {fileID: 1936607820092712230}
+  - component: {fileID: 6883074112634814789}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -175,7 +174,7 @@ MonoBehaviour:
   syncInterval: 0.1
   Speed: 0
   Health: 0
---- !u!114 &2934501669080285829
+--- !u!114 &6883074112634814789
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,28 +183,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5562431664091216651}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ad408b25fc5a054ba28ca1f9dd57371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  ClientAuthority: 0
-  LocalPositionSensitivity: 0.01
-  LocalRotationSensitivity: 0.01
-  LocalScaleSensitivity: 0.01
---- !u!114 &1936607820092712230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5562431664091216651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46ece7cba1daaf74d88f6bf3e5374a16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  GridVisibleRange: 1
-  System: {fileID: 0}
+  target: {fileID: 2450981184536502794}
+  clientAuthority: 0
+  useLocalSpace: 1
+  clientSyncInterval: 0.1
+  showDebugGui: 0
