@@ -124,16 +124,19 @@ namespace JamesFrowen.PositionSync
         Quaternion lastRotation;
 
         // client
-        readonly SnapshotBuffer<TransformState> snapshotBuffer = new SnapshotBuffer<TransformState>(TransformState.CreateInterpolator());
+        internal readonly SnapshotBuffer<TransformState> snapshotBuffer = new SnapshotBuffer<TransformState>(TransformState.CreateInterpolator());
 
 #if DEBUG
+        ExponentialMovingAverage timeDelayAvg = new ExponentialMovingAverage(100);
         void OnGUI()
         {
             if (showDebugGui)
             {
+                float delay = _system.TimeSync.LatestServerTime - _system.TimeSync.InterpolationTimeField;
+                timeDelayAvg.Add(delay);
                 GUILayout.Label($"ServerTime: {_system.TimeSync.LatestServerTime:0.000}");
                 GUILayout.Label($"InterpTime: {_system.TimeSync.InterpolationTimeField:0.000}");
-                GUILayout.Label($"Time Delta: {_system.TimeSync.LatestServerTime - _system.TimeSync.InterpolationTimeField:0.000} scale:{_system.TimeSync.DebugScale:0.000}");
+                GUILayout.Label($"Time Delta: {delay:0.000} smooth:{timeDelayAvg.Value:0.000} scale:{_system.TimeSync.DebugScale:0.000}");
                 GUILayout.Label(snapshotBuffer.ToDebugString(_system.TimeSync.InterpolationTimeField));
             }
         }
